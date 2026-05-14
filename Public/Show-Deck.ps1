@@ -33,7 +33,11 @@ function Show-Deck {
         
         Reports all validation errors and prevents presentation from starting if
         issues are found. Useful for testing presentations before delivering them.
-
+    .PARAMETER StartSlide
+        Optional slide number to start the presentation from (1-based index).
+        Defaults to 1 (the first slide). If specified, the presentation will jump
+        directly to that slide on startup. If an invalid slide number is provided, 
+        it will default back to the first slide.
     .EXAMPLE
         Show-Deck -Path ./presentation.md
 
@@ -49,6 +53,11 @@ function Show-Deck {
 
         Validates the presentation before starting. Checks that all content fits
         within the terminal viewport and all image files exist.
+
+    .EXAMPLE
+        Show-Deck -Path ./presentation.md -StartSlide 3
+
+        Starts the presentation from the specified slide number.
 
     .OUTPUTS
         None. Displays an interactive presentation directly in the terminal.
@@ -91,7 +100,7 @@ function Show-Deck {
         })]
         [string]$Path,
 
-        [Parameter()]
+        [Parameter(HelpMessage="Enable strict validation mode to check slide content fits viewport and all images exist before starting")]
         [switch]$Strict,
 
         [Parameter(HelpMessage="Specify a slide number to jump to that slide on startup")]
